@@ -1,6 +1,6 @@
-# 双刷电机控制器
+# JER1Suite
 
-这是一个基于Electron的跨平台GUI应用程序，用于控制双刷电机控制器设备。该应用提供了直观的用户界面，可以轻松配置和控制设备的各种参数和功能。
+这是一个基于Electron的跨平台GUI应用程序，用于控制JER1设备。该应用提供了直观的用户界面，可以轻松配置和控制设备的各种参数和功能。
 
 ## 功能特点
 
@@ -32,7 +32,7 @@
 
 ```bash
 git clone https://github.com/aerror2/JER1Suite.git
-cd dual-brushed-motor-controller
+cd  JER1Suite
 npm install
 ```
 
