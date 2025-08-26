@@ -1,4 +1,10 @@
 
+
+ 
+**Language / 语言**: [English](#jer1suite-english) | [中文](#jer1suite)
+
+---
+
 # JER1Suite (English)
 
 This is a cross-platform GUI application based on Electron for controlling JER1 devices. The application provides an intuitive user interface for easy configuration and control of various device parameters and functions.
