@@ -11,7 +11,8 @@
     "build:win": "electron-builder --win",
     "build:mac": "electron-builder --mac",
     "build:linux": "electron-builder --linux",
-    "icon:gen": "node scripts/generate-icons.js"
+    "icon:gen": "node scripts/generate-icons.js",
+    "postinstall": "electron-builder install-app-deps"
   },
   "keywords": [
     "motor",
@@ -34,6 +35,7 @@
     "electron": "^25.3.1",
     "electron-builder": "^24.4.0",
     "electron-packager": "^17.1.2",
+    "electron-rebuild": "^3.2.9",
     "png-to-ico": "^2.1.8",
     "sharp": "^0.33.5"
   },
@@ -43,6 +45,9 @@
     "directories": {
       "output": "dist"
     },
+    "nodeGypRebuild": false,
+    "buildDependenciesFromSource": false,
+    "npmRebuild": false,
     "files": [
       "**/*",
       "!**/node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}",
@@ -60,7 +65,16 @@
       "target": [
         "nsis"
       ],
-      "icon": "build/icon.ico"
+      "icon": "build/icon.ico",
+      "extraResources": [
+        {
+          "from": "node_modules/@serialport",
+          "to": "node_modules/@serialport",
+          "filter": [
+            "**/*"
+          ]
+        }
+      ]
     },
     "mac": {
       "target": [
