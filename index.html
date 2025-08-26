@@ -9,21 +9,32 @@
 <body>
   <div class="container">
     <header>
-      <div class="connection-status" id="connectionStatus">未连接</div>
+      <div class="connection-status" id="connectionStatus" data-i18n="status.disconnected">未连接</div>
+
+      <div class="language-selector">
+        <select id="languageSelect">
+          <option value="auto" data-i18n="lang.auto">自动检测</option>
+          <option value="zh-CN" data-i18n="lang.zh-CN">简体中文</option>
+          <option value="zh-TW" data-i18n="lang.zh-TW">繁體中文</option>
+          <option value="ja" data-i18n="lang.ja">日本語</option>
+          <option value="ko" data-i18n="lang.ko">한국어</option>
+          <option value="en" data-i18n="lang.en">English</option>
+        </select>
+      </div>
     </header>
 
     <div class="main-content">
       <!-- 左侧面板：串口连接和设备信息 -->
       <div class="panel connection-panel">
-        <h2>串口连接</h2>
+        <h2 data-i18n="panel.serial">串口连接</h2>
         <div class="form-group">
-          <label for="portSelect">串口:</label>
+          <label for="portSelect" data-i18n="serial.port">串口:</label>
           <select id="portSelect">
-            <option value="">-- 请选择串口 --</option>
+            <option value="" data-i18n="serial.select">-- 请选择串口 --</option>
           </select>
-             <label for="deviceIdForSend">发送设备ID (1-15):</label>
+             <label for="deviceIdForSend" data-i18n="serial.deviceId">发送设备ID (1-15):</label>
             <select id="deviceIdForSend" name="deviceIdForSend">
-              <option value="0">0(无ID)</option>
+              <option value="0" data-i18n="device.noId">0(无ID)</option>
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -41,106 +52,106 @@
               <option value="15">15</option>
             </select>
 
-          <button id="refreshPortsBtn">刷新</button>
+          <button id="refreshPortsBtn" data-i18n="button.refresh">刷新</button>
         </div>
 
         <div class="form-group">
-          <button id="connectBtn" class="primary-btn">连接</button>
-          <button id="autoConnectBtn" class="secondary-btn">自动连接</button>
-          <button id="disconnectBtn" class="danger-btn" disabled>断开</button>
+          <button id="connectBtn" class="primary-btn" data-i18n="button.connect">连接</button>
+          <button id="autoConnectBtn" class="secondary-btn" data-i18n="button.autoConnect">自动连接</button>
+          <button id="disconnectBtn" class="danger-btn" disabled data-i18n="button.disconnect">断开</button>
         </div>
         <div class="form-group">
-          <label>已连接设备</label>
+          <label data-i18n="device.connected">已连接设备</label>
           <div id="connectedDevices" class="connected-devices"></div>
         </div>
         
         <div class="device-info">
-          <h3>设备信息</h3>
+          <h3 data-i18n="device.info">设备信息</h3>
 
           <div class="info-item">
-            <span class="info-label">连接状态:</span>
-            <span class="info-value" id="connectionStatusDetail">未连接</span>
+            <span class="info-label" data-i18n="device.status">连接状态:</span>
+            <span class="info-value" id="connectionStatusDetail" data-i18n="status.disconnected">未连接</span>
           </div>
         </div>
       </div>
 
       <!-- 中间面板：参数配置 -->
       <div class="panel config-panel">
-        <h2>参数配置</h2>
+        <h2 data-i18n="panel.config">参数配置</h2>
         <div class="config-group">
-          <h3>1. 工作频率设置</h3>
+          <h3 data-i18n="config.freq.title">1. 工作频率设置</h3>
           <div class="select-group">
             <select name="freq">
-              <option value="1" selected>1.1 低频 (75Hz/电流低/警笛)</option>
-              <option value="2">1.2 正常 (150Hz/电流正常/救护车)</option>
-              <option value="3">1.3 中频 (500Hz/电流中/消防车)</option>
-              <option value="4">1.4 高频 (1000Hz/电流高/电子射击)</option>
+              <option value="1" selected data-i18n="config.freq.low">1.1 低频 (75Hz/电流低/警笛)</option>
+              <option value="2" data-i18n="config.freq.normal">1.2 正常 (150Hz/电流正常/救护车)</option>
+              <option value="3" data-i18n="config.freq.medium">1.3 中频 (500Hz/电流中/消防车)</option>
+              <option value="4" data-i18n="config.freq.high">1.4 高频 (1000Hz/电流高/电子射击)</option>
             </select>
-            <button class="apply-btn" data-param="freq">设置</button>
-            <button class="query-param-btn" data-param="freq">查询参数</button>
+            <button class="apply-btn" data-param="freq" data-i18n="button.set">设置</button>
+            <button class="query-param-btn" data-param="freq" data-i18n="button.query">查询参数</button>
           </div>
           <div class="help-text">
-            <small>其他模式: PWM频率 | 步进电机模式: 电流等级 | 喇叭模式: 音效类型</small>
+            <small data-i18n="config.freq.help">其他模式: PWM频率 | 步进电机模式: 电流等级 | 喇叭模式: 音效类型</small>
           </div>
         </div>
 
 
         <div class="config-group">
-          <h3>2. 衰减设置</h3>
+          <h3 data-i18n="config.decay.title">2. 衰减设置</h3>
           <div class="select-group">
             <select name="decay">
-              <option value="1" selected>2.1 快速衰减 (4拍模式/低频汽笛)</option>
-              <option value="2">2.2 慢速衰减 (8拍模式/高频汽笛)</option>
+              <option value="1" selected data-i18n="config.decay.fast">2.1 快速衰减 (4拍模式/低频汽笛)</option>
+              <option value="2" data-i18n="config.decay.slow">2.2 慢速衰减 (8拍模式/高频汽笛)</option>
             </select>
-            <button class="apply-btn" data-param="decay">设置</button>
-            <button class="query-param-btn" data-param="decay">查询参数</button>
+            <button class="apply-btn" data-param="decay" data-i18n="button.set">设置</button>
+            <button class="query-param-btn" data-param="decay" data-i18n="button.query">查询参数</button>
           </div>
           <div class="help-text">
-            <small>其他模式: MOS衰减/电机衰减 | 步进电机模式: 4拍/8拍 | 喇叭模式: 低频汽笛/高频汽笛</small>
+            <small data-i18n="config.decay.help">其他模式: MOS衰减/电机衰减 | 步进电机模式: 4拍/8拍 | 喇叭模式: 低频汽笛/高频汽笛</small>
           </div>
         </div>
 
         <div class="config-group">
-          <h3>3. 混控设置</h3>
+          <h3 data-i18n="config.mix.title">3. 混控设置</h3>
           <div class="select-group">
             <select name="mix">
-              <option value="1" selected>3.1 禁用混控 (两路独立)</option>
-              <option value="2">3.2 启用混控 (差速转向)</option>
-              <option value="3">3.3 步进电机模式 (4或5线步进电机)</option>
+              <option value="1" selected data-i18n="config.mix.disable">3.1 禁用混控 (两路独立)</option>
+              <option value="2" data-i18n="config.mix.enable">3.2 启用混控 (差速转向)</option>
+              <option value="3" data-i18n="config.mix.stepper">3.3 步进电机模式 (4或5线步进电机)</option>
             </select>
-            <button class="apply-btn" data-param="mix">设置</button>
-            <button class="query-param-btn" data-param="mix">查询参数</button>
+            <button class="apply-btn" data-param="mix" data-i18n="button.set">设置</button>
+            <button class="query-param-btn" data-param="mix" data-i18n="button.query">查询参数</button>
           </div>
           <div class="help-text">
-            <small>禁用: 两个通道独立控制 | 启用: 混合控制实现差速转向 | 步进电机: 使用步进电机控制逻辑</small>
+            <small data-i18n="config.mix.help">禁用: 两个通道独立控制 | 启用: 混合控制实现差速转向 | 步进电机: 使用步进电机控制逻辑</small>
           </div>
         </div>
 
 
         
         <div class="config-group">
-          <h3>4. 方向设置</h3>
+          <h3 data-i18n="config.rotation.title">4. 方向设置</h3>
           <div class="select-group">
             <select name="rotation">
-              <option value="1" selected>4.1 双向模式</option>
-              <option value="2">4.2 单向模式</option>
-              <option value="3">4.3 舵机模式 (双向有边界)</option>
-              <option value="4">4.4 喇叭模式 (S1汽车鸣笛/S2警笛)</option>
+              <option value="1" selected data-i18n="config.rotation.bidirectional">4.1 双向模式</option>
+              <option value="2" data-i18n="config.rotation.unidirectional">4.2 单向模式</option>
+              <option value="3" data-i18n="config.rotation.servo">4.3 舵机模式 (双向有边界)</option>
+              <option value="4" data-i18n="config.rotation.horn">4.4 喇叭模式 (S1汽车鸣笛/S2警笛)</option>
             </select>
-            <button class="apply-btn" data-param="rotation">设置</button>
-            <button class="query-param-btn" data-param="rotation">查询参数</button>
+            <button class="apply-btn" data-param="rotation" data-i18n="button.set">设置</button>
+            <button class="query-param-btn" data-param="rotation" data-i18n="button.query">查询参数</button>
           </div>
           <div class="help-text">
-            <small>双向: 允许正反转 | 单向: 仅单向旋转 | 舵机: 位置控制模式 | 喇叭: S1汽车鸣笛/S2警笛声</small>
+            <small data-i18n="config.rotation.help">双向: 允许正反转 | 单向: 仅单向旋转 | 舵机: 位置控制模式 | 喇叭: S1汽车鸣笛/S2警笛声</small>
           </div>
         </div>
 
         <div class="config-group">
-          <h3>5. 设备ID</h3>
+          <h3 data-i18n="config.deviceId.title">5. 设备ID</h3>
           <div class="select-group">
-            <label for="deviceIdSelect">设备ID (1-15):</label>
+            <label for="deviceIdSelect" data-i18n="config.deviceId.label">设备ID (1-15):</label>
             <select id="deviceIdSelect" name="deviceId">
-              <option value="0">0(无ID)</option>
+              <option value="0" data-i18n="device.noId">0(无ID)</option>
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -157,34 +168,34 @@
               <option value="14">14</option>
               <option value="15">15</option>
             </select>
-            <button class="apply-btn" data-param="deviceId" id="setDeviceIdBtn">设置设备ID</button>
-            <button class="query-param-btn" data-param="deviceId">查询参数</button>
+            <button class="apply-btn" data-param="deviceId" id="setDeviceIdBtn" data-i18n="button.setDeviceId">设置设备ID</button>
+            <button class="query-param-btn" data-param="deviceId" data-i18n="button.query">查询参数</button>
 
           </div>
           <div class="help-text">
-            <small>用于总线识别，一个USART控制最多15个设备</small>
+            <small data-i18n="config.deviceId.help">用于总线识别，一个USART控制最多15个设备</small>
           </div>
         </div>
 
         <div class="config-group">
-          <h3>6. 输入信号设置</h3>
+          <h3 data-i18n="config.input.title">6. 输入信号设置</h3>
           <div class="select-group">
             <select id="inputSignalSelect" name="inputSignal">
-              <option value="1">6.1 自动检测输入信号</option>
-              <option value="2">6.2 仅使用串口输入</option>
-              <option value="3">6.3 串口或ADC输入</option>
+              <option value="1" data-i18n="config.input.auto">6.1 自动检测输入信号</option>
+              <option value="2" data-i18n="config.input.serial">6.2 仅使用串口输入</option>
+              <option value="3" data-i18n="config.input.serialAdc">6.3 串口或ADC输入</option>
             </select>
-            <button class="apply-btn" data-param="inputSignal">设置</button>
-            <button class="query-param-btn" data-param="inputSignal">查询参数</button>
+            <button class="apply-btn" data-param="inputSignal" data-i18n="button.set">设置</button>
+            <button class="query-param-btn" data-param="inputSignal" data-i18n="button.query">查询参数</button>
           </div>
           <div class="help-text">
-            <small>自动: 自动检测PWM/串口/ADC | 仅串口: 只接受串口命令 | 串口或ADC: 串口命令或模拟量输入</small>
+            <small data-i18n="config.input.help">自动: 自动检测PWM/串口/ADC | 仅串口: 只接受串口命令 | 串口或ADC: 串口命令或模拟量输入</small>
           </div>
         </div>
 
       
 
-        <button class="apply-btn" button id="saveConfigBtn" >保存设置</button>
+        <button class="apply-btn" button id="saveConfigBtn" data-i18n="button.saveConfig">保存设置</button>
 
       </div>
       
@@ -197,7 +208,7 @@
 
         <div class="motors-container">
           <div class="motor-control">
-            <h3>电机A</h3>
+            <h3 data-i18n="motor.motorA">电机A</h3>
             <div class="slider-container">
               <input type="range" id="motorASlider" min="100" max="200" value="150" class="slider">
               <div class="slider-value">
@@ -207,7 +218,7 @@
           </div>
 
           <div class="motor-control">
-            <h3>电机B</h3>
+            <h3 data-i18n="motor.motorB">电机B</h3>
             <div class="slider-container">
               <input type="range" id="motorBSlider" min="100" max="200" value="150" class="slider">
               <div class="slider-value">
@@ -220,18 +231,410 @@
    
 
         <div class="emergency-stop">
-          <button id="startMotorBtn" class="emergency-btn">启动电机</button>
+          <button id="startMotorBtn" class="emergency-btn" data-i18n="button.startMotor">启动电机</button>
         </div>
 
       
 
         <div class="emergency-stop">
-          <button id="startRebootBtn" class="emergency-btn">重启设备</button>
+          <button id="startRebootBtn" class="emergency-btn" data-i18n="button.reboot">重启设备</button>
         </div>
       </div>
 
   </div>
 
   <script src="renderer.js"></script>
+  <script>
+    // 多语言支持系统
+    const i18n = {
+      // 语言数据
+      translations: {
+        'zh-CN': {
+          'lang.auto': '自动检测',
+          'lang.zh-CN': '简体中文',
+          'lang.zh-TW': '繁體中文',
+          'lang.ja': '日本語',
+          'lang.ko': '한국어',
+          'lang.en': 'English',
+          'status.disconnected': '未连接',
+          'status.connected': '已连接',
+          'panel.serial': '串口连接',
+          'panel.config': '参数配置',
+          'serial.port': '串口:',
+          'serial.select': '-- 请选择串口 --',
+          'serial.deviceId': '发送设备ID (1-15):',
+          'device.noId': '0(无ID)',
+          'device.connected': '已连接设备',
+          'device.info': '设备信息',
+          'device.status': '连接状态:',
+          'button.refresh': '刷新',
+          'button.connect': '连接',
+          'button.autoConnect': '自动连接',
+          'button.disconnect': '断开',
+          'button.set': '设置',
+          'button.query': '查询参数',
+          'button.setDeviceId': '设置设备ID',
+          'button.saveConfig': '保存设置',
+          'button.startMotor': '启动电机',
+          'button.reboot': '重启设备',
+          'config.freq.title': '1. 工作频率设置',
+          'config.freq.low': '1.1 低频 (75Hz/电流低/警笛)',
+          'config.freq.normal': '1.2 正常 (150Hz/电流正常/救护车)',
+          'config.freq.medium': '1.3 中频 (500Hz/电流中/消防车)',
+          'config.freq.high': '1.4 高频 (1000Hz/电流高/电子射击)',
+          'config.freq.help': '其他模式: PWM频率 | 步进电机模式: 电流等级 | 喇叭模式: 音效类型',
+          'config.decay.title': '2. 衰减设置',
+          'config.decay.fast': '2.1 快速衰减 (4拍模式/低频汽笛)',
+          'config.decay.slow': '2.2 慢速衰减 (8拍模式/高频汽笛)',
+          'config.decay.help': '其他模式: MOS衰减/电机衰减 | 步进电机模式: 4拍/8拍 | 喇叭模式: 低频汽笛/高频汽笛',
+          'config.mix.title': '3. 混控设置',
+          'config.mix.disable': '3.1 禁用混控 (两路独立)',
+          'config.mix.enable': '3.2 启用混控 (差速转向)',
+          'config.mix.stepper': '3.3 步进电机模式 (4或5线步进电机)',
+          'config.mix.help': '禁用: 两个通道独立控制 | 启用: 混合控制实现差速转向 | 步进电机: 使用步进电机控制逻辑',
+          'config.rotation.title': '4. 方向设置',
+          'config.rotation.bidirectional': '4.1 双向模式',
+          'config.rotation.unidirectional': '4.2 单向模式',
+          'config.rotation.servo': '4.3 舵机模式 (双向有边界)',
+          'config.rotation.horn': '4.4 喇叭模式 (S1汽车鸣笛/S2警笛)',
+          'config.rotation.help': '双向: 允许正反转 | 单向: 仅单向旋转 | 舵机: 位置控制模式 | 喇叭: S1汽车鸣笛/S2警笛声',
+          'config.deviceId.title': '5. 设备ID',
+          'config.deviceId.label': '设备ID (1-15):',
+          'config.deviceId.help': '用于总线识别，一个USART控制最多15个设备',
+          'config.input.title': '6. 输入信号设置',
+          'config.input.auto': '6.1 自动检测输入信号',
+          'config.input.serial': '6.2 仅使用串口输入',
+          'config.input.serialAdc': '6.3 串口或ADC输入',
+          'config.input.help': '自动: 自动检测PWM/串口/ADC | 仅串口: 只接受串口命令 | 串口或ADC: 串口命令或模拟量输入',
+          'motor.motorA': '电机A',
+          'motor.motorB': '电机B'
+        },
+        'zh-TW': {
+          'lang.auto': '自動檢測',
+          'lang.zh-CN': '簡體中文',
+          'lang.zh-TW': '繁體中文',
+          'lang.ja': '日本語',
+          'lang.ko': '한국어',
+          'lang.en': 'English',
+          'status.disconnected': '未連接',
+          'status.connected': '已連接',
+          'panel.serial': '串口連接',
+          'panel.config': '參數配置',
+          'serial.port': '串口:',
+          'serial.select': '-- 請選擇串口 --',
+          'serial.deviceId': '發送設備ID (1-15):',
+          'device.noId': '0(無ID)',
+          'device.connected': '已連接設備',
+          'device.info': '設備信息',
+          'device.status': '連接狀態:',
+          'button.refresh': '刷新',
+          'button.connect': '連接',
+          'button.autoConnect': '自動連接',
+          'button.disconnect': '斷開',
+          'button.set': '設置',
+          'button.query': '查詢參數',
+          'button.setDeviceId': '設置設備ID',
+          'button.saveConfig': '保存設置',
+          'button.startMotor': '啟動電機',
+          'button.reboot': '重啟設備',
+          'config.freq.title': '1. 工作頻率設置',
+          'config.freq.low': '1.1 低頻 (75Hz/電流低/警笛)',
+          'config.freq.normal': '1.2 正常 (150Hz/電流正常/救護車)',
+          'config.freq.medium': '1.3 中頻 (500Hz/電流中/消防車)',
+          'config.freq.high': '1.4 高頻 (1000Hz/電流高/電子射擊)',
+          'config.freq.help': '其他模式: PWM頻率 | 步進電機模式: 電流等級 | 喇叭模式: 音效類型',
+          'config.decay.title': '2. 衰減設置',
+          'config.decay.fast': '2.1 快速衰減 (4拍模式/低頻汽笛)',
+          'config.decay.slow': '2.2 慢速衰減 (8拍模式/高頻汽笛)',
+          'config.decay.help': '其他模式: MOS衰減/電機衰減 | 步進電機模式: 4拍/8拍 | 喇叭模式: 低頻汽笛/高頻汽笛',
+          'config.mix.title': '3. 混控設置',
+          'config.mix.disable': '3.1 禁用混控 (兩路獨立)',
+          'config.mix.enable': '3.2 啟用混控 (差速轉向)',
+          'config.mix.stepper': '3.3 步進電機模式 (4或5線步進電機)',
+          'config.mix.help': '禁用: 兩個通道獨立控制 | 啟用: 混合控制實現差速轉向 | 步進電機: 使用步進電機控制邏輯',
+          'config.rotation.title': '4. 方向設置',
+          'config.rotation.bidirectional': '4.1 雙向模式',
+          'config.rotation.unidirectional': '4.2 單向模式',
+          'config.rotation.servo': '4.3 舵機模式 (雙向有邊界)',
+          'config.rotation.horn': '4.4 喇叭模式 (S1汽車鳴笛/S2警笛)',
+          'config.rotation.help': '雙向: 允許正反轉 | 單向: 僅單向旋轉 | 舵機: 位置控制模式 | 喇叭: S1汽車鳴笛/S2警笛聲',
+          'config.deviceId.title': '5. 設備ID',
+          'config.deviceId.label': '設備ID (1-15):',
+          'config.deviceId.help': '用於總線識別，一個USART控制最多15個設備',
+          'config.input.title': '6. 輸入信號設置',
+          'config.input.auto': '6.1 自動檢測輸入信號',
+          'config.input.serial': '6.2 僅使用串口輸入',
+          'config.input.serialAdc': '6.3 串口或ADC輸入',
+          'config.input.help': '自動: 自動檢測PWM/串口/ADC | 僅串口: 只接受串口命令 | 串口或ADC: 串口命令或模擬量輸入',
+          'motor.motorA': '電機A',
+          'motor.motorB': '電機B'
+        },
+        'ja': {
+          'lang.auto': '自動検出',
+          'lang.zh-CN': '簡体中国語',
+          'lang.zh-TW': '繁体中国語',
+          'lang.ja': '日本語',
+          'lang.ko': '한국어',
+          'lang.en': 'English',
+          'status.disconnected': '未接続',
+          'status.connected': '接続済み',
+          'panel.serial': 'シリアル接続',
+          'panel.config': 'パラメータ設定',
+          'serial.port': 'シリアルポート:',
+          'serial.select': '-- ポートを選択 --',
+          'serial.deviceId': '送信デバイスID (1-15):',
+          'device.noId': '0(IDなし)',
+          'device.connected': '接続済みデバイス',
+          'device.info': 'デバイス情報',
+          'device.status': '接続状態:',
+          'button.refresh': '更新',
+          'button.connect': '接続',
+          'button.autoConnect': '自動接続',
+          'button.disconnect': '切断',
+          'button.set': '設定',
+          'button.query': 'パラメータ照会',
+          'button.setDeviceId': 'デバイスID設定',
+          'button.saveConfig': '設定保存',
+          'button.startMotor': 'モーター起動',
+          'button.reboot': 'デバイス再起動',
+          'config.freq.title': '1. 動作周波数設定',
+          'config.freq.low': '1.1 低周波 (75Hz/低電流/サイレン)',
+          'config.freq.normal': '1.2 標準 (150Hz/標準電流/救急車)',
+          'config.freq.medium': '1.3 中周波 (500Hz/中電流/消防車)',
+          'config.freq.high': '1.4 高周波 (1000Hz/高電流/電子射撃)',
+          'config.freq.help': 'その他モード: PWM周波数 | ステッピングモーター: 電流レベル | ホーンモード: 音響タイプ',
+          'config.decay.title': '2. 減衰設定',
+          'config.decay.fast': '2.1 高速減衰 (4拍モード/低周波ホーン)',
+          'config.decay.slow': '2.2 低速減衰 (8拍モード/高周波ホーン)',
+          'config.decay.help': 'その他モード: MOS減衰/モーター減衰 | ステッピングモーター: 4拍/8拍 | ホーンモード: 低周波/高周波ホーン',
+          'config.mix.title': '3. ミックス制御設定',
+          'config.mix.disable': '3.1 ミックス制御無効 (2チャンネル独立)',
+          'config.mix.enable': '3.2 ミックス制御有効 (差動ステアリング)',
+          'config.mix.stepper': '3.3 ステッピングモーターモード (4または5線)',
+          'config.mix.help': '無効: 2チャンネル独立制御 | 有効: ミックス制御で差動ステアリング | ステッピング: ステッピングモーター制御ロジック',
+          'config.rotation.title': '4. 方向設定',
+          'config.rotation.bidirectional': '4.1 双方向モード',
+          'config.rotation.unidirectional': '4.2 単方向モード',
+          'config.rotation.servo': '4.3 サーボモード (双方向境界あり)',
+          'config.rotation.horn': '4.4 ホーンモード (S1車ホーン/S2サイレン)',
+          'config.rotation.help': '双方向: 正逆回転可能 | 単方向: 単方向回転のみ | サーボ: 位置制御モード | ホーン: S1車ホーン/S2サイレン音',
+          'config.deviceId.title': '5. デバイスID',
+          'config.deviceId.label': 'デバイスID (1-15):',
+          'config.deviceId.help': 'バス識別用、1つのUSARTで最大15デバイス制御',
+          'config.input.title': '6. 入力信号設定',
+          'config.input.auto': '6.1 入力信号自動検出',
+          'config.input.serial': '6.2 シリアル入力のみ',
+          'config.input.serialAdc': '6.3 シリアルまたはADC入力',
+          'config.input.help': '自動: PWM/シリアル/ADC自動検出 | シリアルのみ: シリアルコマンドのみ | シリアルまたはADC: シリアルコマンドまたはアナログ入力',
+          'motor.motorA': 'モーターA',
+          'motor.motorB': 'モーターB'
+        },
+        'ko': {
+          'lang.auto': '자동 감지',
+          'lang.zh-CN': '간체 중국어',
+          'lang.zh-TW': '번체 중국어',
+          'lang.ja': '일본어',
+          'lang.ko': '한국어',
+          'lang.en': 'English',
+          'status.disconnected': '연결 안됨',
+          'status.connected': '연결됨',
+          'panel.serial': '시리얼 연결',
+          'panel.config': '매개변수 설정',
+          'serial.port': '시리얼 포트:',
+          'serial.select': '-- 포트 선택 --',
+          'serial.deviceId': '송신 장치 ID (1-15):',
+          'device.noId': '0(ID 없음)',
+          'device.connected': '연결된 장치',
+          'device.info': '장치 정보',
+          'device.status': '연결 상태:',
+          'button.refresh': '새로고침',
+          'button.connect': '연결',
+          'button.autoConnect': '자동 연결',
+          'button.disconnect': '연결 해제',
+          'button.set': '설정',
+          'button.query': '매개변수 조회',
+          'button.setDeviceId': '장치 ID 설정',
+          'button.saveConfig': '설정 저장',
+          'button.startMotor': '모터 시작',
+          'button.reboot': '장치 재시작',
+          'config.freq.title': '1. 작동 주파수 설정',
+          'config.freq.low': '1.1 저주파 (75Hz/저전류/사이렌)',
+          'config.freq.normal': '1.2 표준 (150Hz/표준전류/구급차)',
+          'config.freq.medium': '1.3 중주파 (500Hz/중전류/소방차)',
+          'config.freq.high': '1.4 고주파 (1000Hz/고전류/전자 사격)',
+          'config.freq.help': '기타 모드: PWM 주파수 | 스테핑 모터 모드: 전류 레벨 | 혼 모드: 음향 타입',
+          'config.decay.title': '2. 감쇠 설정',
+          'config.decay.fast': '2.1 빠른 감쇠 (4박자 모드/저주파 혼)',
+          'config.decay.slow': '2.2 느린 감쇠 (8박자 모드/고주파 혼)',
+          'config.decay.help': '기타 모드: MOS 감쇠/모터 감쇠 | 스테핑 모터 모드: 4박자/8박자 | 혼 모드: 저주파/고주파 혼',
+          'config.mix.title': '3. 믹스 제어 설정',
+          'config.mix.disable': '3.1 믹스 제어 비활성화 (2채널 독립)',
+          'config.mix.enable': '3.2 믹스 제어 활성화 (차동 조향)',
+          'config.mix.stepper': '3.3 스테핑 모터 모드 (4선 또는 5선)',
+          'config.mix.help': '비활성화: 2채널 독립 제어 | 활성화: 믹스 제어로 차동 조향 | 스테핑: 스테핑 모터 제어 로직',
+          'config.rotation.title': '4. 방향 설정',
+          'config.rotation.bidirectional': '4.1 양방향 모드',
+          'config.rotation.unidirectional': '4.2 단방향 모드',
+          'config.rotation.servo': '4.3 서보 모드 (양방향 경계 있음)',
+          'config.rotation.horn': '4.4 혼 모드 (S1 자동차 혼/S2 사이렌)',
+          'config.rotation.help': '양방향: 정역회전 가능 | 단방향: 단방향 회전만 | 서보: 위치 제어 모드 | 혼: S1 자동차 혼/S2 사이렌 소리',
+          'config.deviceId.title': '5. 장치 ID',
+          'config.deviceId.label': '장치 ID (1-15):',
+          'config.deviceId.help': '버스 식별용, 하나의 USART로 최대 15개 장치 제어',
+          'config.input.title': '6. 입력 신호 설정',
+          'config.input.auto': '6.1 입력 신호 자동 감지',
+          'config.input.serial': '6.2 시리얼 입력만 사용',
+          'config.input.serialAdc': '6.3 시리얼 또는 ADC 입력',
+          'config.input.help': '자동: PWM/시리얼/ADC 자동 감지 | 시리얼만: 시리얼 명령만 수락 | 시리얼 또는 ADC: 시리얼 명령 또는 아날로그 입력',
+          'motor.motorA': '모터 A',
+          'motor.motorB': '모터 B'
+        },
+        'en': {
+          'lang.auto': 'Auto Detect',
+          'lang.zh-CN': 'Simplified Chinese',
+          'lang.zh-TW': 'Traditional Chinese',
+          'lang.ja': 'Japanese',
+          'lang.ko': 'Korean',
+          'lang.en': 'English',
+          'status.disconnected': 'Disconnected',
+          'status.connected': 'Connected',
+          'panel.serial': 'Serial Connection',
+          'panel.config': 'Parameter Configuration',
+          'serial.port': 'Serial Port:',
+          'serial.select': '-- Select Port --',
+          'serial.deviceId': 'Send Device ID (1-15):',
+          'device.noId': '0(No ID)',
+          'device.connected': 'Connected Devices',
+          'device.info': 'Device Information',
+          'device.status': 'Connection Status:',
+          'button.refresh': 'Refresh',
+          'button.connect': 'Connect',
+          'button.autoConnect': 'Auto Connect',
+          'button.disconnect': 'Disconnect',
+          'button.set': 'Set',
+          'button.query': 'Query Parameters',
+          'button.setDeviceId': 'Set Device ID',
+          'button.saveConfig': 'Save Settings',
+          'button.startMotor': 'Start Motor',
+          'button.reboot': 'Reboot Device',
+          'config.freq.title': '1. Working Frequency Setting',
+          'config.freq.low': '1.1 Low Frequency (75Hz/Low Current/Siren)',
+          'config.freq.normal': '1.2 Normal (150Hz/Normal Current/Ambulance)',
+          'config.freq.medium': '1.3 Medium Frequency (500Hz/Medium Current/Fire Truck)',
+          'config.freq.high': '1.4 High Frequency (1000Hz/High Current/Electronic Shooting)',
+          'config.freq.help': 'Other modes: PWM frequency | Stepper motor mode: Current level | Horn mode: Sound type',
+          'config.decay.title': '2. Decay Setting',
+          'config.decay.fast': '2.1 Fast Decay (4-beat mode/Low frequency horn)',
+          'config.decay.slow': '2.2 Slow Decay (8-beat mode/High frequency horn)',
+          'config.decay.help': 'Other modes: MOS decay/Motor decay | Stepper motor mode: 4-beat/8-beat | Horn mode: Low/High frequency horn',
+          'config.mix.title': '3. Mix Control Setting',
+          'config.mix.disable': '3.1 Disable Mix Control (Two channels independent)',
+          'config.mix.enable': '3.2 Enable Mix Control (Differential steering)',
+          'config.mix.stepper': '3.3 Stepper Motor Mode (4 or 5-wire stepper motor)',
+          'config.mix.help': 'Disable: Two channels independent control | Enable: Mix control for differential steering | Stepper: Use stepper motor control logic',
+          'config.rotation.title': '4. Direction Setting',
+          'config.rotation.bidirectional': '4.1 Bidirectional Mode',
+          'config.rotation.unidirectional': '4.2 Unidirectional Mode',
+          'config.rotation.servo': '4.3 Servo Mode (Bidirectional with boundaries)',
+          'config.rotation.horn': '4.4 Horn Mode (S1 Car Horn/S2 Siren)',
+          'config.rotation.help': 'Bidirectional: Allow forward and reverse | Unidirectional: Only single direction | Servo: Position control mode | Horn: S1 car horn/S2 siren sound',
+          'config.deviceId.title': '5. Device ID',
+          'config.deviceId.label': 'Device ID (1-15):',
+          'config.deviceId.help': 'For bus identification, one USART controls up to 15 devices',
+          'config.input.title': '6. Input Signal Setting',
+          'config.input.auto': '6.1 Auto Detect Input Signal',
+          'config.input.serial': '6.2 Serial Input Only',
+          'config.input.serialAdc': '6.3 Serial or ADC Input',
+          'config.input.help': 'Auto: Auto detect PWM/Serial/ADC | Serial only: Accept serial commands only | Serial or ADC: Serial commands or analog input',
+          'motor.motorA': 'Motor A',
+          'motor.motorB': 'Motor B'
+        }
+      },
+      
+      // 当前语言
+      currentLanguage: 'zh-CN',
+      
+      // 检测系统语言
+      detectLanguage() {
+        const browserLang = navigator.language || navigator.userLanguage;
+        
+        // 语言映射
+        const langMap = {
+          'zh-CN': 'zh-CN',
+          'zh-Hans': 'zh-CN',
+          'zh': 'zh-CN',
+          'zh-TW': 'zh-TW',
+          'zh-Hant': 'zh-TW',
+          'ja': 'ja',
+          'ja-JP': 'ja',
+          'ko': 'ko',
+          'ko-KR': 'ko'
+        };
+        
+        return langMap[browserLang] || 'en';
+      },
+      
+      // 设置语言
+      setLanguage(lang) {
+        if (lang === 'auto') {
+          lang = this.detectLanguage();
+        }
+        
+        this.currentLanguage = lang;
+        localStorage.setItem('language', lang);
+        this.updateTexts();
+        
+        // 更新HTML lang属性
+        document.documentElement.lang = lang;
+      },
+      
+      // 获取翻译文本
+      t(key) {
+        const translations = this.translations[this.currentLanguage];
+        return translations && translations[key] ? translations[key] : key;
+      },
+      
+      // 更新页面文本
+      updateTexts() {
+        const elements = document.querySelectorAll('[data-i18n]');
+        elements.forEach(element => {
+          const key = element.getAttribute('data-i18n');
+          const translation = this.t(key);
+          
+          if (element.tagName === 'INPUT' && element.type === 'button') {
+            element.value = translation;
+          } else if (element.tagName === 'OPTION') {
+            element.textContent = translation;
+          } else {
+            element.textContent = translation;
+          }
+        });
+      },
+      
+      // 初始化
+      init() {
+        // 从本地存储获取语言设置
+        const savedLang = localStorage.getItem('language');
+        const initialLang = savedLang || 'auto';
+        
+        // 设置语言选择器
+        const languageSelect = document.getElementById('languageSelect');
+        languageSelect.value = initialLang;
+        
+        // 设置语言
+        this.setLanguage(initialLang);
+        
+        // 监听语言选择器变化
+        languageSelect.addEventListener('change', (e) => {
+          this.setLanguage(e.target.value);
+        });
+      }
+    };
+    
+    // 页面加载完成后初始化多语言系统
+    document.addEventListener('DOMContentLoaded', () => {
+      i18n.init();
+    });
+  </script>
 </body>
 </html>

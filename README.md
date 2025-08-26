@@ -212,3 +212,220 @@ const connectCommand = [0x55, 0x0F, 0x00, 0x00, 0x0F];
 ## 许可证
 
 本项目采用MIT许可证。详情请参阅LICENSE文件。
+
+---
+
+# JER1Suite (English)
+
+This is a cross-platform GUI application based on Electron for controlling JER1 devices. The application provides an intuitive user interface for easy configuration and control of various device parameters and functions.
+
+## Features
+
+- **Serial Communication**: Automatic detection of available serial ports, support for multiple baud rates
+- **Motor Control**: Precise control of two motors' PWM values (-100% to +100%)
+- **Parameter Configuration**:
+  - PWM frequency adjustment (Low/Normal/Medium/High frequency)
+  - Rotation direction control (Bidirectional/Unidirectional/Servo mode/Horn mode)
+  - Decay mode settings (Fast/Slow)
+  - Mix control mode settings (Disable/Enable/Stepper motor mode)
+  - Input signal mode (USART or PWM/USART only/USART or ADC)
+- **Device Management**: Support for multi-device bus control (up to 15 devices)
+- **Real-time Monitoring**: Real-time communication log display for debugging
+- **Emergency Stop**: One-click stop for all motor operations
+
+## Installation Guide
+
+### System Requirements
+
+- Windows 7 or higher
+- macOS 10.11 or higher
+- Linux (Ubuntu 16.04 or higher)
+
+### Building from Source
+
+1. Ensure Node.js is installed (v16 or higher recommended)
+
+2. Clone the repository and install dependencies:
+
+```bash
+git clone https://github.com/aerror2/JER1Suite.git
+cd JER1Suite
+npm install
+```
+
+3. Start the application:
+
+```bash
+npm start
+```
+
+4. Build executable files:
+
+```bash
+# Windows
+npm run build:win
+
+# macOS
+npm run build:mac
+
+# Linux
+npm run build:linux
+```
+
+## Usage Instructions
+
+### Connecting Device
+
+1. Start the application
+2. Select the correct serial port and baud rate in the left panel (default 115200)
+3. Click the "Connect" button
+4. After successful connection, the status indicator will turn green
+
+### Motor Control
+
+- Use sliders to adjust motor speed and direction
+- Use preset buttons to quickly set common speeds
+- In emergency situations, click the "Emergency Stop" button to immediately stop all motors
+
+### Parameter Configuration
+
+1. Select the desired parameter settings in the middle panel
+2. Click the corresponding "Apply" button to send settings to the device
+
+## Communication Protocol
+
+The application uses the following command format to communicate with devices:
+
+```
+Command Format: 0x55 + Command Type + Parameter1 + Parameter2 + Checksum
+Command Type: High 4 bits are device ID, low 4 bits are command
+Checksum = Command Type + Parameter1 + Parameter2
+```
+
+### Main Commands
+
+#### Basic Commands
+- `0x0F`: Host connection command
+- `0x01`: Host write configuration
+- `0x02`: Host save settings
+- `0x03`: Host start motor
+- `0x04`: Reset all to default
+- `0x05`: Reboot device
+- `0x06`: Host set PWM1, PWM2
+- `0x07`: Set device ID (for bus identification, 1-15 specific devices, 0 for all)
+- `0x08`: Query device parameters
+
+#### Function Commands
+- `0x01`: Frequency setting
+- `0x02`: Decay mode setting
+- `0x03`: Mix control mode setting
+- `0x04`: Rotation direction setting
+- `0x05`: Input signal setting
+
+### Parameter Definitions
+
+#### Working Frequency Setting Parameters
+- `0x01`: Low frequency (75Hz/Low current/Siren)
+- `0x02`: Normal (150Hz/Normal current/Ambulance)
+- `0x03`: Medium frequency (500Hz/Medium current/Fire truck)
+- `0x04`: High frequency (1000Hz/High current/Electronic shooting)
+
+*Multi-mode Function Description:*
+- **PWM Mode**: Controls PWM frequency
+- **Stepper Motor Mode**: Controls current level
+- **Horn Mode**: Controls sound effect type
+
+#### Direction Setting Parameters
+- `0x01`: Bidirectional mode (allows forward and reverse)
+- `0x02`: Unidirectional mode (single direction rotation only)
+- `0x03`: Servo mode (bidirectional with boundaries, position control mode)
+- `0x04`: Horn mode (S1 car horn/S2 siren sound)
+
+#### Decay Setting Parameters
+- `0x01`: Fast decay (4-beat mode/Low frequency horn)
+- `0x02`: Slow decay (8-beat mode/High frequency horn)
+
+*Multi-mode Function Description:*
+- **Normal Mode**: MOS decay/Motor decay
+- **Stepper Motor Mode**: 4-beat/8-beat control
+- **Horn Mode**: Low frequency horn/High frequency horn
+
+#### Mix Control Setting Parameters
+- `0x01`: Disable mix control (two channels independent, independent control of two channels)
+- `0x02`: Enable mix control (differential steering, mixed control for differential steering)
+- `0x03`: Stepper motor mode (4 or 5-wire stepper motor, uses stepper motor control logic)
+
+#### Input Signal Setting Parameters
+- `0x01`: Auto detect input signal (auto detect PWM/Serial/ADC)
+- `0x02`: Serial input only (accept serial commands only)
+- `0x03`: Serial or ADC input (serial commands or analog input)
+
+#### Device ID Parameters
+- `0x00`: No ID (broadcast mode)
+- `0x01-0x0F`: Device ID 1-15 (for bus identification, one USART controls up to 15 devices)
+
+### Command Examples
+
+```javascript
+// Set PWM frequency to high frequency
+const command = [0x55, 0x01, 0x01, 0x04, 0x06]; // 0x55 + FUNC_FREQ + PARAM_FREQ_HIGH + checksum
+
+// Set motor PWM values
+const pwmCommand = [0x55, 0x06, pwm1Value, pwm2Value, checksum];
+
+// Connect device
+const connectCommand = [0x55, 0x0F, 0x00, 0x00, 0x0F];
+```
+
+## Troubleshooting
+
+### Unable to Connect Device
+
+- Confirm the device is properly connected to the computer
+- Verify the correct serial port and baud rate are selected
+- Check if device drivers are properly installed
+- Try reconnecting the USB connection
+- Check if device ID settings are correct
+
+### Motor Not Responding to Commands
+
+- Check if connection status is normal
+- Confirm motor power is connected
+- Try resetting the device (send reboot command)
+- Check communication log for error messages
+- Verify command format and checksum are correct
+
+### Multi-device Communication Issues
+
+- Confirm each device has a unique ID setting (1-15)
+- Check if bus connections are normal
+- Use device ID 0 for broadcast testing
+- Test devices individually
+
+## Developer Information
+
+### Project Structure
+
+- `main.js`: Electron main process
+- `preload.js`: Preload script, provides secure IPC communication and protocol definitions
+- `renderer.js`: Renderer process, handles UI interactions
+- `serial.js`: Serial communication management
+- `protocol.js`: Communication protocol handling
+- `index.html`: Main interface
+- `styles.css`: Stylesheet
+
+### Technology Stack
+
+- Electron: Cross-platform desktop application framework
+- SerialPort: Node.js serial communication library
+- HTML/CSS/JavaScript: Frontend interface
+
+### Protocol Implementation
+
+Protocol-related constants and functions are defined in `preload.js`:
+- `COMMANDS`: Contains constant definitions for all commands and parameters
+- `formatCommand()`: Command formatting function, automatically calculates checksum
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
