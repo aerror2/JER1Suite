@@ -1,6 +1,4 @@
 
-
- 
 **Language / 语言**: [English](#jer1suite-english) | [中文](#jer1suite)
 
 ---
