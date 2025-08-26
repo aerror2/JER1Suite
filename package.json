@@ -12,7 +12,9 @@
     "build:mac": "electron-builder --mac",
     "build:linux": "electron-builder --linux",
     "icon:gen": "node scripts/generate-icons.js",
-    "postinstall": "electron-builder install-app-deps"
+    "dist": "npm run build",
+    "postinstall": "electron-builder install-app-deps",
+    "rebuild": "electron-rebuild"
   },
   "keywords": [
     "motor",
@@ -28,9 +30,10 @@
   "license": "MIT",
   "dependencies": {
     "@serialport/parser-readline": "^10.5.0",
-    "serialport": "^10.5.0"
+    "serialport": "^13.0.0"
   },
   "devDependencies": {
+    "@electron/rebuild": "^4.0.1",
     "cross-env": "^7.0.3",
     "electron": "^25.3.1",
     "electron-builder": "^24.4.0",
@@ -62,20 +65,11 @@
       "!**/{npm-debug.log,yarn.lock,.yarn-integrity,.yarn-metadata.json}"
     ],
     "win": {
-      "target": [
-        "nsis"
-      ],
+      "target": "nsis",
       "icon": "build/icon.ico",
-      "extraResources": [
-        {
-          "from": "node_modules/@serialport",
-          "to": "node_modules/@serialport",
-          "filter": [
-            "**/*"
-          ]
-        }
-      ]
+      "asar": false
     },
+    "beforeBuild": "scripts/before-build.js",
     "mac": {
       "target": [
         "dmg"

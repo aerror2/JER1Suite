@@ -1,7 +1,46 @@
 
 
-const { SerialPort } = require('serialport');
+const NativeModuleHandler = require('./src/native-module-handler');
 const { ReadlineParser } = require('@serialport/parser-readline');
+
+// Global SerialPort reference
+let SerialPort = null;
+let isSerialPortInitialized = false;
+
+// Initialize SerialPort with native module handler
+async function initializeSerialPort() {
+  if (isSerialPortInitialized) {
+    return SerialPort;
+  }
+
+  try {
+    const handler = new NativeModuleHandler();
+    const SP = await handler.initializeSerialPort();
+    
+    if (SP && SP.list) {
+      SerialPort = SP;
+      isSerialPortInitialized = true;
+      console.log('SerialPort initialized successfully');
+    } else {
+      // Fallback to direct require
+      console.log('Using fallback SerialPort initialization');
+      SerialPort = require('serialport').SerialPort;
+      isSerialPortInitialized = true;
+    }
+  } catch (error) {
+    console.error('Failed to initialize SerialPort:', error.message);
+    // Create a mock SerialPort for graceful degradation
+    SerialPort = {
+      list: async () => {
+        console.warn('Mock SerialPort.list() - no serial ports available');
+        return [];
+      }
+    };
+    isSerialPortInitialized = true;
+  }
+
+  return SerialPort;
+}
 
 class SerialConnection {
   constructor(portPath, baudRate = 9600) {
@@ -13,9 +52,17 @@ class SerialConnection {
   }
 
   // 连接串口
-  connect() {
-    return new Promise((resolve, reject) => {
+  async connect() {
+    return new Promise(async (resolve, reject) => {
       try {
+        // Ensure SerialPort is initialized
+        await initializeSerialPort();
+        
+        if (!SerialPort || typeof SerialPort !== 'function') {
+          reject(new Error('SerialPort is not available'));
+          return;
+        }
+        
         this.port = new SerialPort({
           path: this.portPath,
           baudRate: this.baudRate,
@@ -109,16 +156,27 @@ class MultiSerialManager {
   // 获取可用串口列表
   async getPorts() {
     try {
+      // Ensure SerialPort is initialized
+      await initializeSerialPort();
+      
+      if (!SerialPort || !SerialPort.list) {
+        console.warn('SerialPort.list is not available');
+        return [];
+      }
+      
       const ports = await SerialPort.list();
       return ports.map(port => ({
         path: port.path,
         manufacturer: port.manufacturer || '未知',
         serialNumber: port.serialNumber || '未知',
-        pnpId: port.pnpId || '未知'
+        pnpId: port.pnpId || '未知',
+        locationId: port.locationId || '未知',
+        productId: port.productId || '未知',
+        vendorId: port.vendorId || '未知'
       }));
     } catch (error) {
       console.error('获取串口列表失败:', error);
-      throw error;
+      return [];
     }
   }
 

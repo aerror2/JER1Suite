@@ -164,17 +164,33 @@ else
   }
 fi
 
+# 设置交叉编译环境变量
+echo -e "\033[33m设置交叉编译环境变量...\033[0m"
+export npm_config_target_platform=win32
+export npm_config_target_arch="$ARCH"
+export npm_config_disturl=https://electronjs.org/headers
+export npm_config_runtime=electron
+export npm_config_cache=/tmp/.npm
+export npm_config_build_from_source=true
+export npm_config_target=$(node -p "require('./package.json').devDependencies.electron" 2>/dev/null | sed 's/^\^//')
+
 # 清理缓存，让 electron-builder 重新构建
 echo -e "\033[33m清理构建缓存...\033[0m"
 rm -rf node_modules/.cache 2>/dev/null || true
 rm -rf ~/.electron 2>/dev/null || true
 rm -rf ~/.cache/electron-builder 2>/dev/null || true
+rm -rf node_modules/@serialport/bindings-cpp/build 2>/dev/null || true
+rm -rf node_modules/@serialport/bindings-cpp/prebuilds 2>/dev/null || true
 
 # 安装 electron-rebuild（如果没有的话）
 if ! command -v electron-rebuild &> /dev/null; then
   echo -e "\033[33m安装 electron-rebuild...\033[0m"
   npm install --save-dev electron-rebuild --prefer-offline 2>/dev/null || true
 fi
+
+# 为 Windows 平台重建 native 模块
+echo -e "\033[33m为 Windows 平台重建 native 模块...\033[0m"
+npx electron-rebuild --platform=win32 --arch=$ARCH --module-dir=node_modules/@serialport/bindings-cpp
 
 echo -e "\033[32m✓ 构建环境准备完成，electron-builder 将自动处理 native 模块重建\033[0m"
 

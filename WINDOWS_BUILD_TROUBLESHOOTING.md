@@ -180,6 +180,28 @@ gyp ERR! stack Error: `gyp` failed with exit code: 1
 5. Or use an older Python version (3.11 or earlier)
 6. The script will automatically detect and attempt to fix this issue
 
+### 3. `bindings.node is not a valid Win32 application`
+
+**错误描述 / Error Description：**
+```
+Uncaught Exception:
+Error: \\?\C:\Users\...\AppData\Local\Temp\...\bindings.node is not a valid Win32 application.
+```
+
+**原因 / Cause：**
+- Native 模块（如 `@serialport/bindings-cpp`）仍然是 macOS 版本，没有正确为 Windows 平台编译
+- Native modules (like `@serialport/bindings-cpp`) are still macOS versions, not properly compiled for Windows platform
+
+**解决方案 / Solution：**
+1. 确保 `package.json` 中 `nodeGypRebuild: true` 和 `buildDependenciesFromSource: true`
+2. 使用 `asarUnpack` 配置确保 native 模块不被打包到 asar 文件中
+3. 设置正确的交叉编译环境变量
+4. 清理所有缓存和预编译文件
+5. Ensure `nodeGypRebuild: true` and `buildDependenciesFromSource: true` in `package.json`
+6. Use `asarUnpack` configuration to ensure native modules are not packed into asar files
+7. Set correct cross-compilation environment variables
+8. Clean all caches and precompiled files
+
 ## 相关资源 / Related Resources
 
 - [electron-builder 文档](https://www.electron.build/)
